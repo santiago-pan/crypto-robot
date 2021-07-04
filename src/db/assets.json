@@ -1,0 +1,37 @@
+{
+  "BTC": {
+    "coin": "BTC",
+    "total": 0.01639934,
+    "inOrder": 0.0041
+  },
+  "LTC": {
+    "coin": "LTC",
+    "total": 1,
+    "inOrder": 1
+  },
+  "LINK": {
+    "coin": "LINK",
+    "total": 5,
+    "inOrder": 3
+  },
+  "ADA": {
+    "coin": "ADA",
+    "total": 120,
+    "inOrder": 100
+  },
+  "OGN": {
+    "coin": "OGN",
+    "total": 60,
+    "inOrder": 30
+  },
+  "VET": {
+    "coin": "VET",
+    "total": 258.799,
+    "inOrder": 129
+  },
+  "BNB": {
+    "coin": "BNB",
+    "total": 0.00623328,
+    "inOrder": 0
+  }
+}
