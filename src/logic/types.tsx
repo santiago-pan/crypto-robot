@@ -22,6 +22,7 @@ export type ALT_COIN =
   | 'IOST'
   | 'LTC'
   | 'LINK'
+  | 'LUNA'
   | 'OGN'
   | 'PERL'
   | 'UNI'
