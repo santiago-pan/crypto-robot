@@ -45,9 +45,13 @@ export async function setSellOp(
   console.log(`SELL order, coin ${coin}, units ${ammount}, price ${price} `);
 }
 
-export async function getCoinPriceHistory(coin: ALT_COIN, since: number) {
+/**
+ * @param coin  Coin to fetch price history from
+ * @param hoursAgo Number of hours back from present time
+ */
+export async function getCoinPriceHistory(coin: ALT_COIN, hoursAgo: number) {
   const to = Math.floor(new Date().getTime() / 1000);
-  const from = to - since * 60 * 60;
+  const from = to - hoursAgo * 60 * 60;
   const url = `${BASE_API}coins/${COIN_MAP[coin]}/market_chart/range?vs_currency=usd&from=${from}&to=${to}`;
   const response = await fetch(url)
   return response.json()
