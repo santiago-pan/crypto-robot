@@ -6,6 +6,7 @@ export const COIN_MAP: { [key: string]: string } = {
   DOT: 'polkadot',
   LTC: 'litecoin',
   LINK: 'chainlink',
+  LUNA: 'terra-luna',
   UNI: 'unicorn-token',
   VET: 'vechain',
 };
