@@ -1,6 +1,26 @@
 import { CoinPrice, getCoinPrice } from '../api/api';
 import { ALT_COIN, Transaction } from './types';
 
+export function runTradeEngine() {
+  // Gather open SELL operation/s (binance/db)
+  // Gather open BUY operation/s (binance/db)
+  // Gather available liquidity (binance/db)
+  // Gather coin/s current price (coingecko)
+  // Gather coin/s history price (max,min)
+
+  // Run SELL orders logic
+  // - currentPrice over lowers BUY order
+  // - currentPrice over local max price
+  // - price diff step (orders price separation)
+  // - time diff gap (orders time difference)
+
+  // Run BUY orders logic
+  // - currentPrice over higher SELL order
+  // - currentPrice over local min price
+  // - price diff step (orders price separation)
+  // - time diff gap (orders time difference)
+}
+
 export const getTransactionValueBTC = (t: Transaction): number =>
   t.amount * t.price;
 
@@ -53,7 +73,3 @@ export function getAltCoinBTCPrice(
     date: altCoinUSD.date,
   };
 }
-
-// ADA 1.8 USD
-// BTC 57000 USD
-// ADABTC 1.8/57000

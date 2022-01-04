@@ -31,3 +31,13 @@ export async function getCoinPrice(
     date: new Date(response[COIN_MAP[coin]].last_updated_at * 1000),
   };
 }
+
+export async function setBuyOp(coin: ALT_COIN, ammount: number, price: number) {
+  // Binance API
+  console.log(`BUY order, coin ${coin}, units ${ammount}, price ${price} `);
+}
+
+export async function setSellOp(coin: ALT_COIN, ammount: number, price: number) {
+  // Binance API
+  console.log(`SELL order, coin ${coin}, units ${ammount}, price ${price} `);
+}

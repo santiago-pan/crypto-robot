@@ -31,7 +31,7 @@ describe('Formulas tests', () => {
   it('should return exception', () => {
     try {
       getTransactionsProfitBTC(tBuy, tBuy);
-    } catch (err) {
+    } catch (err: any) {
       expect(err.toString()).toBe(
         'Error: Sell transaction is not of type SELL',
       );
@@ -41,7 +41,7 @@ describe('Formulas tests', () => {
   it('should return exception', () => {
     try {
       getTransactionsProfitBTC(transaction, tBuy);
-    } catch (err) {
+    } catch (err: any) {
       expect(err.toString()).toBe(
         'Error: Transactions do not have same alt coin',
       );
