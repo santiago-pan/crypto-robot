@@ -31,7 +31,7 @@ export type ALT_COIN =
   | 'XRP';
 export type BASE_COIN = 'BNB' | 'BTC' | 'ETH' | 'BUSD';
 
-export type COINS = BASE_COIN | ALT_COIN
+export type COINS = BASE_COIN | ALT_COIN;
 
 export type TRANSACTION_TYPE = 'BUY' | 'SELL';
 
@@ -50,4 +50,10 @@ export type Asset = {
   coin: BASE_COIN | ALT_COIN;
   total: number;
   inOrder: number;
-}
+};
+
+export type PriceHistory = {
+  price: [[number, number]];
+  market_caps: [[number, number]];
+  total_volumes: [[number, number]];
+};
