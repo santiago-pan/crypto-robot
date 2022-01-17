@@ -1,19 +1,52 @@
-# Crypto Robot
+# Crypto robot
+Setting SELL/BUY orders automatically on Binance.
 
-Trade operations on Binance
+# How to
 
-## Available CoinGecko API
+## Dev mode run
 
-https://api.coingecko.com/api/v3/coins/chainlink/market_chart/range?vs_currency=usd&from=1614179060&to=1619259642
+`yarn start:dev`
 
-https://api.coingecko.com/api/v3/simple/price?ids=cardano&vs_currencies=usd
-https://api.coingecko.com/api/v3/simple/price?ids=terra-luna&vs_currencies=usd
-https://api.coingecko.com/api/v3/simple/price?ids=binancecoin&vs_currencies=usd
+## Build
 
-### List all coins
-https://api.coingecko.com/api/v3/coins/list
+`yarn build`
 
-## ToDo
+## Production run
 
-getLastOperation(coin): SELL/BUY/null
-getPriceDifference(coin): number (bitcoin)
+`yarn start`
+
+## NodeJS and Typescript starter
+
+Create project
+
+`npm init -y`
+
+Install typescript
+
+`npm install --save-dev typescript`
+
+Add `tsconfig.json`
+
+```
+{
+  "compilerOptions": {
+    "target": "ES2016",
+    "lib": [
+      "ES6"
+    ],
+    "module": "CommonJS",
+    "rootDir": "src",
+    "resolveJsonModule": true,
+    "allowJs": true,
+    "outDir": "build",
+    "esModuleInterop": true,
+    "forceConsistentCasingInFileNames": true,
+    "strict": true,
+    "noImplicitAny": true,
+    "skipLibCheck": true
+  },
+  "include": [
+    "src"
+  ]
+}
+```
