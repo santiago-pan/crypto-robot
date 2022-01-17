@@ -90,7 +90,7 @@ describe('Formulas tests', () => {
     const coinPrice = await getCoinPrice('ADA');
     const btcPrice = await getCoinPrice('BTC');
     const coinBTCPrice = getAltCoinBTCPrice(btcPrice, coinPrice);
-    console.log('price: ', coinBTCPrice);
+    // console.log('price: ', coinBTCPrice);
     expect(coinBTCPrice.price > 0).toBeTruthy();
   });
   it('should calculate the sell profit', async () => {
@@ -98,8 +98,8 @@ describe('Formulas tests', () => {
     const lastTransaction = getLastTransaction(db, 'ADA');
     if (lastTransaction) {
       const profit = await getSellProfitBTC(lastTransaction, 'ADA');
-      console.log('Last transaction: ', lastTransaction);
-      console.log('BTC profit: ', profit);
+      // console.log('Last transaction: ', lastTransaction);
+      // console.log('BTC profit: ', profit);
     }
   });
 });
@@ -759,3 +759,9 @@ const transactionHistory: Transaction[] = [
     coinFee: 'BNB',
   },
 ];
+
+// describe('test', () => {
+//   it('test',()=>{
+//     expect(1).toBe(1)
+//   })
+// })

@@ -1,4 +1,6 @@
 import { ALT_COIN, BASE_COIN, COIN_MAP, CURRENCY } from '../logic/types';
+import fetch from 'node-fetch'
+import { IJsonResponse, IResponse } from './types';
 
 export const BASE_API = 'https://api.coingecko.com/api/v3/';
 
@@ -23,7 +25,7 @@ export async function getCoinPrice(
     await fetch(
       `${BASE_API}simple/price?ids=${COIN_MAP[coin]}&vs_currencies=${currency}&include_last_updated_at=true`,
     )
-  ).json();
+  ).json() as PriceResponse
 
   return {
     price: response[COIN_MAP[coin]][currency],
@@ -49,10 +51,13 @@ export async function setSellOp(
  * @param coin  Coin to fetch price history from
  * @param hoursAgo Number of hours back from present time
  */
-export async function getCoinPriceHistory(coin: ALT_COIN, hoursAgo: number) {
+export async function getCoinPriceHistory(coin: ALT_COIN, hoursAgo: number): Promise<IJsonResponse> {
   const to = Math.floor(new Date().getTime() / 1000);
   const from = to - hoursAgo * 60 * 60;
   const url = `${BASE_API}coins/${COIN_MAP[coin]}/market_chart/range?vs_currency=usd&from=${from}&to=${to}`;
   const response = await fetch(url)
-  return response.json()
+  if (!response.ok) {
+    throw new Error(response.statusText)
+  }
+  return await response.json() as IJsonResponse
 }
