@@ -1,10 +1,10 @@
-import { getCoinPrice } from '../api/api';
+import { getCoinPrice } from '../api/coingecko-api';
 import {
   getLastOperation,
   getLastTransaction,
   loadTransactions,
   startDb,
-} from '../db/db';
+} from '../db/db-helper';
 import {
   getAltCoinBTCPrice,
   getSellProfitBTC,
