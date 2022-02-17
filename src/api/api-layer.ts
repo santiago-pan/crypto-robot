@@ -61,8 +61,8 @@ export async function getLastFilledBuyOrder(): Promise<OpenOrder | null> {
     return {
       id: b.orderId,
       date: new Date(b.time),
-      price: parseFloat(b.price),
-      quantity: parseFloat(b.origQty),
+      price: parseFloat(b.cummulativeQuoteQty) / parseFloat(b.executedQty),
+      quantity: parseFloat(b.executedQty),
       side: b.side,
       symbol: b.symbol,
       timestampCreated: b.time,
@@ -83,8 +83,8 @@ export async function getLastFilledSellOrder(): Promise<OpenOrder | null> {
     return {
       id: b.orderId,
       date: new Date(b.time),
-      price: parseFloat(b.price),
-      quantity: parseFloat(b.origQty),
+      price: parseFloat(b.cummulativeQuoteQty) / parseFloat(b.executedQty),
+      quantity: parseFloat(b.executedQty),
       side: b.side,
       symbol: b.symbol,
       timestampCreated: b.time,

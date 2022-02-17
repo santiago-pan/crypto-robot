@@ -29,7 +29,7 @@ describe('binance api test', () => {
     });
     console.log(newOrderResponse)
   });
-  it.skip('should get all orders', async () => {
+  it('should get all orders', async () => {
     const allOrders = await bnbAllOrders('LUNABUSD', { limit: 20 });
     // await saveBinanceOrders(allOrders)
     console.log(allOrders);

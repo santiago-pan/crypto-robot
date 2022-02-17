@@ -13,7 +13,7 @@ import { pushBuyOrderToStack, stackPopOrder } from '../db/stack-helper';
 import { getCoinBalance } from './helpers';
 import { ALT_COIN, LoopStatus, OpenOrder, Transaction } from './types';
 
-const PROFIT = 1;
+const PROFIT = 0.5;
 const QUANTITY = 1;
 
 export async function callLoop() {
@@ -42,13 +42,18 @@ export async function callLoop() {
     return;
   }
 
+  const referencePrice =
+    lastFilledBuyOrder.timestampUpdated > lastFilledSellOrder.timestampUpdated
+      ? lastFilledBuyOrder.price
+      : lastFilledSellOrder.price;
+
   const date = new Date();
   console.log(
     `${date.toISOString().replace('T', ' ').replace('Z', '').slice(0, -4)} [${
       coinPrice.price
     }] [Sold ${lastFilledSellOrder.price}, Bought ${
       lastFilledBuyOrder.price
-    }, Balance ${Math.round(busdBalance)}]`,
+    }, Last ${referencePrice} Balance ${Math.round(busdBalance)}]`,
   );
 
   const result = await loop(
@@ -78,7 +83,7 @@ export async function loop(
 
   // Create SELL order if stack it not empty
   if (stackOrder) {
-    await sellCoin(stackOrder.price + PROFIT, QUANTITY, test);
+    await sellCoin(lastFilledBuyOrder.price + PROFIT, QUANTITY, test);
     return { status: 'ok' };
   }
 

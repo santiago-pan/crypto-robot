@@ -140,7 +140,7 @@ describe('Formulas tests', () => {
     );
 
     expect(r.status).toBe('ok');
-    expect((await stackPopOrder())?.price).toBe(50);
+    expect((await stackPopOrder())?.price).toBe(10);
     expect(await stackPopOrder()).toBeNull();
   });
   it('should create a buy operation', async () => {
@@ -178,7 +178,7 @@ describe('Formulas tests', () => {
     );
 
     expect(r.status).toBe('ok');
-    expect((await stackPopOrder())?.price).toBe(50);
+    expect((await stackPopOrder())?.price).toBe(10);
     expect(await stackPopOrder()).toBeNull();
   });
   it('should not create a buy operation', async () => {
