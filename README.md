@@ -50,3 +50,15 @@ Add `tsconfig.json`
   ]
 }
 ```
+
+## PM2
+
+`pm2 start app.js`
+
+`pm2 monit`
+
+`pm2 list`
+
+`pm2 stop`
+
+`pm2 restart`

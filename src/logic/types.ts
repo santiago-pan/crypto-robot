@@ -1,4 +1,4 @@
-import { BinanceBalance, ORDER_SIDE, SYMBOL } from '../api/api-types';
+import { ORDER_SIDE, SYMBOL } from '../api/api-types';
 
 export const COIN_MAP: { [key: string]: string } = {
   ADA: 'cardano',
@@ -62,15 +62,25 @@ export type OpenOrder = {
   quantity: number;
   side: ORDER_SIDE;
   date: Date;
-  timestapm: number;
+  timestampCreated: number;
+  timestampUpdated: number;
 };
 
 export type Balance = {
-  coin: ALT_COIN,
-  free: number,
-  locked: number
-}
+  coin: ALT_COIN;
+  free: number;
+  locked: number;
+};
 
 export type Wallet = {
   balances: ReadonlyArray<Balance>;
 };
+
+export type LoopStatus =
+  | {
+      status: 'ok';
+    }
+  | {
+      status: 'error';
+      msg: string;
+    };

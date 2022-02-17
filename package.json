@@ -6,7 +6,7 @@
   "scripts": {
     "start:dev": "nodemon -w",
     "build": "rimraf ./build && tsc",
-    "start": "yarn build && node build/index.js",
+    "start": "yarn build && pm2 start build/index.js",
     "test": "jest",
     "test:watch": "jest --watchAll"
   },

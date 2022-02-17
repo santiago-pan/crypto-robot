@@ -36,7 +36,8 @@ const mock_open_orders: ReadonlyArray<OpenOrder> = [
     quantity: 1,
     side: 'SELL',
     symbol: 'LUNABUSD',
-    timestapm: 1640581760303,
+    timestampCreated: 1640581760303,
+    timestampUpdated: 1640581760303,
   },
   {
     id: 2,
@@ -45,7 +46,8 @@ const mock_open_orders: ReadonlyArray<OpenOrder> = [
     quantity: 1,
     side: 'SELL',
     symbol: 'LUNABUSD',
-    timestapm: 1640608058035,
+    timestampCreated: 1640608058035,
+    timestampUpdated: 1640608058035,
   },
   {
     id: 3,
@@ -54,7 +56,8 @@ const mock_open_orders: ReadonlyArray<OpenOrder> = [
     quantity: 2,
     side: 'SELL',
     symbol: 'LUNABUSD',
-    timestapm: 1640657623814,
+    timestampCreated: 1640657623814,
+    timestampUpdated: 1640657623814,
   },
   {
     id: 4,
@@ -63,7 +66,8 @@ const mock_open_orders: ReadonlyArray<OpenOrder> = [
     quantity: 1,
     side: 'SELL',
     symbol: 'LUNABUSD',
-    timestapm: 1641450009617,
+    timestampCreated: 1641450009617,
+    timestampUpdated: 1641450009617,
   },
   {
     id: 5,
@@ -72,7 +76,8 @@ const mock_open_orders: ReadonlyArray<OpenOrder> = [
     quantity: 1,
     side: 'SELL',
     symbol: 'LUNABUSD',
-    timestapm: 1641450016727,
+    timestampCreated: 1641450016727,
+    timestampUpdated: 1641450016727,
   },
   {
     id: 6,
@@ -81,7 +86,8 @@ const mock_open_orders: ReadonlyArray<OpenOrder> = [
     quantity: 1,
     side: 'SELL',
     symbol: 'LUNABUSD',
-    timestapm: 1642501530260,
+    timestampCreated: 1642501530260,
+    timestampUpdated: 1642501530260,
   },
   {
     id: 7,
@@ -90,7 +96,8 @@ const mock_open_orders: ReadonlyArray<OpenOrder> = [
     quantity: 1,
     side: 'BUY',
     symbol: 'LUNABUSD',
-    timestapm: 1642867362221,
+    timestampCreated: 1642867362221,
+    timestampUpdated: 1642867362221,
   },
   {
     id: 8,
@@ -99,7 +106,8 @@ const mock_open_orders: ReadonlyArray<OpenOrder> = [
     quantity: 1,
     side: 'SELL',
     symbol: 'LUNABUSD',
-    timestapm: 1643098937095,
+    timestampCreated: 1643098937095,
+    timestampUpdated: 1643098937095,
   },
   {
     id: 9,
@@ -108,6 +116,7 @@ const mock_open_orders: ReadonlyArray<OpenOrder> = [
     quantity: 1,
     side: 'SELL',
     symbol: 'LUNABUSD',
-    timestapm: 1643268474577,
+    timestampCreated: 1643268474577,
+    timestampUpdated: 1643268474577,
   },
 ];

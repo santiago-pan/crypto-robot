@@ -1,3 +1,4 @@
+import { CoinPrice } from '../api/api-types';
 import { getCoinPrice } from '../api/coingecko-api';
 import {
   getLastOperation,
@@ -5,14 +6,16 @@ import {
   loadTransactions,
   startDb,
 } from '../db/db-helper';
+import { pushBuyOrderToStack, stackPopOrder } from '../db/stack-helper';
 import {
   getAltCoinBTCPrice,
   getSellProfitBTC,
   getTransactionPair,
   getTransactionsProfitBTC,
   getTransactionValueBTC,
+  loop,
 } from '../logic/formulas';
-import { Transaction } from '../logic/types';
+import { OpenOrder, Transaction } from '../logic/types';
 import { btcData } from '../static/data';
 
 describe('Formulas tests', () => {
@@ -101,6 +104,159 @@ describe('Formulas tests', () => {
       // console.log('Last transaction: ', lastTransaction);
       // console.log('BTC profit: ', profit);
     }
+  });
+  it('should create a buy operation', async () => {
+    const coinPrice: CoinPrice = {
+      date: 1,
+      price: 10,
+    };
+    const lastFilledSellOrder: OpenOrder = {
+      date: new Date(),
+      id: 1,
+      price: 12,
+      quantity: 1,
+      side: 'SELL',
+      symbol: 'LUNABUSD',
+      timestampCreated: 1,
+      timestampUpdated: 3,
+    };
+
+    const lastFilledBuyOrder: OpenOrder = {
+      date: new Date(),
+      id: 1,
+      price: 11,
+      quantity: 1,
+      side: 'SELL',
+      symbol: 'LUNABUSD',
+      timestampCreated: 1,
+      timestampUpdated: 2,
+    };
+
+    const r = await loop(
+      coinPrice,
+      lastFilledSellOrder,
+      lastFilledBuyOrder,
+      100,
+    );
+
+    expect(r.status).toBe('ok');
+    expect((await stackPopOrder())?.price).toBe(50);
+    expect(await stackPopOrder()).toBeNull();
+  });
+  it('should create a buy operation', async () => {
+    const coinPrice: CoinPrice = {
+      date: 1,
+      price: 10,
+    };
+    const lastFilledSellOrder: OpenOrder = {
+      date: new Date(),
+      id: 1,
+      price: 11,
+      quantity: 1,
+      side: 'SELL',
+      symbol: 'LUNABUSD',
+      timestampCreated: 1,
+      timestampUpdated: 2,
+    };
+
+    const lastFilledBuyOrder: OpenOrder = {
+      date: new Date(),
+      id: 1,
+      price: 12,
+      quantity: 1,
+      side: 'SELL',
+      symbol: 'LUNABUSD',
+      timestampCreated: 1,
+      timestampUpdated: 3,
+    };
+
+    const r = await loop(
+      coinPrice,
+      lastFilledSellOrder,
+      lastFilledBuyOrder,
+      100,
+    );
+
+    expect(r.status).toBe('ok');
+    expect((await stackPopOrder())?.price).toBe(50);
+    expect(await stackPopOrder()).toBeNull();
+  });
+  it('should not create a buy operation', async () => {
+    const coinPrice: CoinPrice = {
+      date: 1,
+      price: 13,
+    };
+    const lastFilledSellOrder: OpenOrder = {
+      date: new Date(),
+      id: 1,
+      price: 1,
+      quantity: 1,
+      side: 'SELL',
+      symbol: 'LUNABUSD',
+      timestampCreated: 1,
+      timestampUpdated: 2,
+    };
+
+    const lastFilledBuyOrder: OpenOrder = {
+      date: new Date(),
+      id: 1,
+      price: 12,
+      quantity: 1,
+      side: 'SELL',
+      symbol: 'LUNABUSD',
+      timestampCreated: 1,
+      timestampUpdated: 3,
+    };
+
+    const r = await loop(
+      coinPrice,
+      lastFilledSellOrder,
+      lastFilledBuyOrder,
+      100,
+    );
+
+    expect(r.status).toBe('ok');
+    expect(await stackPopOrder()).toBeNull();
+  });
+
+  it('should not create a buy operation', async () => {
+    const coinPrice: CoinPrice = {
+      date: 1,
+      price: 13,
+    };
+    const lastFilledSellOrder: OpenOrder = {
+      date: new Date(),
+      id: 1,
+      price: 11,
+      quantity: 1,
+      side: 'SELL',
+      symbol: 'LUNABUSD',
+      timestampCreated: 1,
+      timestampUpdated: 2,
+    };
+
+    const lastFilledBuyOrder: OpenOrder = {
+      date: new Date(),
+      id: 1,
+      price: 12,
+      quantity: 1,
+      side: 'SELL',
+      symbol: 'LUNABUSD',
+      timestampCreated: 1,
+      timestampUpdated: 3,
+    };
+
+    await pushBuyOrderToStack(1,10)
+
+    const r = await loop(
+      coinPrice,
+      lastFilledSellOrder,
+      lastFilledBuyOrder,
+      100,
+    );
+
+    expect(r.status).toBe('ok');
+    expect(await stackPopOrder()).toBeNull();
   });
 });
 

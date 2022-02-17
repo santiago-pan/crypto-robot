@@ -26,7 +26,8 @@ export async function getOpenOrders(): Promise<ReadonlyArray<OpenOrder>> {
     quantity: parseFloat(b.origQty),
     side: b.side,
     symbol: b.symbol,
-    timestapm: b.time,
+    timestampCreated: b.time,
+    timestampUpdated: b.updateTime,
   }));
 }
 
@@ -42,7 +43,8 @@ export async function getLastOpenBuyOrder(): Promise<OpenOrder | null> {
       quantity: parseFloat(b.origQty),
       side: b.side,
       symbol: b.symbol,
-      timestapm: b.time,
+      timestampCreated: b.time,
+      timestampUpdated: b.updateTime,
     };
   }
   return null;
@@ -63,14 +65,15 @@ export async function getLastFilledBuyOrder(): Promise<OpenOrder | null> {
       quantity: parseFloat(b.origQty),
       side: b.side,
       symbol: b.symbol,
-      timestapm: b.time,
+      timestampCreated: b.time,
+      timestampUpdated: b.updateTime,
     };
   }
   return null;
 }
 
 export async function getLastFilledSellOrder(): Promise<OpenOrder | null> {
-  const bnbOrders = await bnbAllOrders('LUNABUSD', { limit: 20 });
+  const bnbOrders = await bnbAllOrders('LUNABUSD', { limit: 200 });
   const buyOrders = [...bnbOrders]
     .sort((a, b) => (a.updateTime > b.updateTime ? 1 : -1))
     .filter((b) => b.side === 'SELL')
@@ -84,7 +87,8 @@ export async function getLastFilledSellOrder(): Promise<OpenOrder | null> {
       quantity: parseFloat(b.origQty),
       side: b.side,
       symbol: b.symbol,
-      timestapm: b.time,
+      timestampCreated: b.time,
+      timestampUpdated: b.updateTime,
     };
   }
   return null;
@@ -93,8 +97,9 @@ export async function getLastFilledSellOrder(): Promise<OpenOrder | null> {
 export async function buyCoin(
   price: number,
   quantity: number,
+  test = true
 ): Promise<{ id: number; price: number } | null> {
-  if (process.env.MODE !== 'PRODUCTION') {
+  if (test) {
     console.log(`TEST MODE: Buy order at price: ${price} of ${quantity} coin`);
     return {
       id: 1,
@@ -115,12 +120,12 @@ export async function buyCoin(
   );
   return {
     id: newOrderResponse.orderId,
-    price: parseInt(newOrderResponse.price),
+    price: parseFloat(newOrderResponse.price),
   };
 }
 
-export async function sellCoin(price: number, quantity: number) {
-  if (process.env.MODE !== 'PRODUCTION') {
+export async function sellCoin(price: number, quantity: number, test = true) {
+  if (test) {
     console.log(`TEST MODE: Sell order at price: ${price} of ${quantity} coin`);
     return {
       id: 1,
@@ -141,6 +146,6 @@ export async function sellCoin(price: number, quantity: number) {
   );
   return {
     id: newOrderResponse.orderId,
-    price: parseInt(newOrderResponse.price),
+    price: parseFloat(newOrderResponse.price),
   };
 }
