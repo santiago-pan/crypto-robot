@@ -1,4 +1,5 @@
 import { ALT_COIN, Balance, OpenOrder, Wallet } from '../logic/types';
+import { SYMBOL } from './api-types';
 import {
   bnbAccount,
   bnbAllOrders,
@@ -31,9 +32,13 @@ export async function getOpenOrders(): Promise<ReadonlyArray<OpenOrder>> {
   }));
 }
 
-export async function getLastOpenBuyOrder(): Promise<OpenOrder | null> {
+export async function getLastOpenBuyOrder(
+  symbol: SYMBOL,
+): Promise<OpenOrder | null> {
   const bnbOrders = await bnbOpenOrders();
-  const buyOrders = bnbOrders.filter((b) => b.side === 'BUY');
+  const buyOrders = bnbOrders.filter(
+    (b) => b.side === 'BUY' && b.symbol === symbol,
+  );
   if (buyOrders.length > 0) {
     const b = buyOrders[buyOrders.length - 1];
     return {
@@ -51,7 +56,7 @@ export async function getLastOpenBuyOrder(): Promise<OpenOrder | null> {
 }
 
 export async function getLastFilledBuyOrder(): Promise<OpenOrder | null> {
-  const bnbOrders = await bnbAllOrders('LUNABUSD', { limit: 20 });
+  const bnbOrders = await bnbAllOrders('LUNABUSD', {});
   const buyOrders = [...bnbOrders]
     .sort((a, b) => (a.updateTime > b.updateTime ? 1 : -1))
     .filter((b) => b.side === 'BUY')
@@ -73,7 +78,7 @@ export async function getLastFilledBuyOrder(): Promise<OpenOrder | null> {
 }
 
 export async function getLastFilledSellOrder(): Promise<OpenOrder | null> {
-  const bnbOrders = await bnbAllOrders('LUNABUSD', { limit: 200 });
+  const bnbOrders = await bnbAllOrders('LUNABUSD', {});
   const buyOrders = [...bnbOrders]
     .sort((a, b) => (a.updateTime > b.updateTime ? 1 : -1))
     .filter((b) => b.side === 'SELL')
@@ -97,7 +102,7 @@ export async function getLastFilledSellOrder(): Promise<OpenOrder | null> {
 export async function buyCoin(
   price: number,
   quantity: number,
-  test = true
+  test = true,
 ): Promise<{ id: number; price: number } | null> {
   if (test) {
     console.log(`TEST MODE: Buy order at price: ${price} of ${quantity} coin`);

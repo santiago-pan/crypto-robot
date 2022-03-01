@@ -24,7 +24,7 @@ export async function callLoop() {
   const coinPrice = await getCoinPrice('LUNA');
   const wallet = await getWallet();
   const busdBalance = getCoinBalance('BUSD', wallet);
-  const lastOpenBuyOrder = await getLastOpenBuyOrder();
+  const lastOpenBuyOrder = await getLastOpenBuyOrder('LUNABUSD');
 
   if (lastOpenBuyOrder) {
     console.log(

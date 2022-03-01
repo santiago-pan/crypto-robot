@@ -29,8 +29,8 @@ describe('binance api test', () => {
     });
     console.log(newOrderResponse)
   });
-  it('should get all orders', async () => {
-    const allOrders = await bnbAllOrders('LUNABUSD', { limit: 20 });
+  it.skip('should get all orders', async () => {
+    const allOrders = await bnbAllOrders('LUNABUSD', {});
     // await saveBinanceOrders(allOrders)
     console.log(allOrders);
   });
@@ -45,15 +45,15 @@ describe('layer api test', () => {
     const wallet = await getWallet();
     console.log(wallet);
   });
-  it.skip('should get latest open BUY order', async () => {
-    const lastBuyOrder = await getLastOpenBuyOrder();
+  it('should get latest open BUY order', async () => {
+    const lastBuyOrder = await getLastOpenBuyOrder('LUNABUSD');
     console.log(lastBuyOrder);
   });
-  it.skip('should get latest filled BUY order', async () => {
+  it('should get latest filled BUY order', async () => {
     const lastBuyOrder = await getLastFilledBuyOrder();
     console.log(lastBuyOrder);
   });
-  it.skip('should get latest filled SELL order', async () => {
+  it('should get latest filled SELL order', async () => {
     const lastBuyOrder = await getLastFilledSellOrder();
     console.log(lastBuyOrder);
   });

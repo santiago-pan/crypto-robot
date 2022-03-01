@@ -227,6 +227,7 @@ export async function bnbAllOrders(
     '/api/v3/allOrders',
     Object.assign(options, {
       symbol: symbol.toUpperCase(),
+      orderId: 276590520
     }),
   );
 
