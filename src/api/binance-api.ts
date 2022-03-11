@@ -1,3 +1,4 @@
+import { log } from '../db/logger';
 import {
   BinanceAccount,
   BinanceAllOrderOptions,
@@ -93,6 +94,7 @@ export async function bnbNewOrder(
   );
 
   if (response.status !== 200) {
+    log(response.statusText);
     return null;
   }
   return response.data;
@@ -196,6 +198,7 @@ export async function bnbOpenOrders(
   const response = await signRequest('GET', '/api/v3/openOrders', options);
 
   if (response.status != 200) {
+    log(response.statusText);
     throw Error(response.statusText);
   }
 
@@ -227,11 +230,12 @@ export async function bnbAllOrders(
     '/api/v3/allOrders',
     Object.assign(options, {
       symbol: symbol.toUpperCase(),
-      orderId: 276590520
+      orderId: 450384142
     }),
   );
 
   if (response.status != 200) {
+    log(response.statusText);
     throw Error(response.statusText);
   }
 
@@ -375,6 +379,7 @@ export async function bnbAccount(options = {}): Promise<BinanceAccount> {
   const response = await signRequest('GET', '/api/v3/account', options);
 
   if (response.status != 200) {
+    log(response.statusText);
     throw Error(response.statusText);
   }
 

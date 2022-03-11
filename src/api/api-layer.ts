@@ -1,3 +1,4 @@
+import { log } from '../db/logger';
 import { ALT_COIN, Balance, OpenOrder, Wallet } from '../logic/types';
 import { SYMBOL } from './api-types';
 import {
@@ -123,6 +124,7 @@ export async function buyCoin(
   console.log(
     `PRODUCTION MODE: Buy order at price: ${price} of ${quantity} coin`,
   );
+  log(`PRODUCTION MODE: Buy order at price: ${price} of ${quantity} coin`);
   return {
     id: newOrderResponse.orderId,
     price: parseFloat(newOrderResponse.price),
@@ -149,6 +151,7 @@ export async function sellCoin(price: number, quantity: number, test = true) {
   console.log(
     `PRODUCTION MODE: Sell order at price: ${price} of ${quantity} coin`,
   );
+  log(`PRODUCTION MODE: Sell order at price: ${price} of ${quantity} coin`);
   return {
     id: newOrderResponse.orderId,
     price: parseFloat(newOrderResponse.price),

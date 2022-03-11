@@ -9,6 +9,7 @@ import {
 import { CoinPrice } from '../api/api-types';
 import { getCoinPrice } from '../api/coingecko-api';
 import { updateLastPrice } from '../db/db-helper';
+import { log } from '../db/logger';
 import { pushBuyOrderToStack, stackPopOrder } from '../db/stack-helper';
 import { getCoinBalance } from './helpers';
 import { ALT_COIN, LoopStatus, OpenOrder, Transaction } from './types';
@@ -38,7 +39,7 @@ export async function callLoop() {
 
   // Check current price with last SELL filled order
   if (!lastFilledBuyOrder || !lastFilledSellOrder) {
-    console.log('No last buy or sell orders available');
+    log('No last buy or sell orders available');
     return;
   }
 
@@ -65,7 +66,7 @@ export async function callLoop() {
   );
 
   if (result.status === 'error') {
-    console.log(`Error: ${result.msg}`);
+    log(`Error: ${result.msg}`);
   }
 
   await updateLastPrice('LUNA', coinPrice);
@@ -163,4 +164,18 @@ export function getAltCoinBTCPrice(
     price: altCoinUSD.price / btcUSDPrice.price,
     date: altCoinUSD.date,
   };
+}
+
+export function getInvestQuantity(price: number) {
+  const maxPrice = 90; // 1
+  const minPrice = 40; // 2
+  const step = 1 / (maxPrice - minPrice);
+
+  if (price >= maxPrice) {
+    return 1;
+  }
+  if (price <= minPrice) {
+    return 2;
+  }
+  return Math.round((1 + (maxPrice - price) * step) * 100) / 100;
 }

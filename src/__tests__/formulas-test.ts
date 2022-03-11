@@ -9,6 +9,7 @@ import {
 import { pushBuyOrderToStack, stackPopOrder } from '../db/stack-helper';
 import {
   getAltCoinBTCPrice,
+  getInvestQuantity,
   getSellProfitBTC,
   getTransactionPair,
   getTransactionsProfitBTC,
@@ -259,6 +260,15 @@ describe('Formulas tests', () => {
     expect(await stackPopOrder()).toBeNull();
   });
 });
+
+it('should get the quantity to invest based on price', () => {
+  expect(getInvestQuantity(100)).toBe(1)
+  expect(getInvestQuantity(90.1)).toBe(1)
+  expect(getInvestQuantity(80)).toBe(1.2)
+  expect(getInvestQuantity(70)).toBe(1.4)
+  expect(getInvestQuantity(39.9)).toBe(2)
+  expect(getInvestQuantity(30)).toBe(2)
+})
 
 const transaction: Transaction = {
   date: new Date(),

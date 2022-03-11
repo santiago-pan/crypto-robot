@@ -27,9 +27,9 @@ describe('binance api test', () => {
       quantity: 1,
       timeInForce: 'GTC',
     });
-    console.log(newOrderResponse)
+    console.log(newOrderResponse);
   });
-  it.skip('should get all orders', async () => {
+  it('should get all orders', async () => {
     const allOrders = await bnbAllOrders('LUNABUSD', {});
     // await saveBinanceOrders(allOrders)
     console.log(allOrders);
@@ -45,7 +45,7 @@ describe('layer api test', () => {
     const wallet = await getWallet();
     console.log(wallet);
   });
-  it('should get latest open BUY order', async () => {
+  it.skip('should get latest open BUY order', async () => {
     const lastBuyOrder = await getLastOpenBuyOrder('LUNABUSD');
     console.log(lastBuyOrder);
   });
