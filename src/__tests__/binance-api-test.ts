@@ -32,7 +32,7 @@ describe('binance api test', () => {
   it('should get all orders', async () => {
     const allOrders = await bnbAllOrders('LUNABUSD', {});
     // await saveBinanceOrders(allOrders)
-    console.log(allOrders);
+    console.log(JSON.stringify(allOrders.map(o => o.orderId)));
   });
 });
 

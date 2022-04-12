@@ -230,7 +230,7 @@ export async function bnbAllOrders(
     '/api/v3/allOrders',
     Object.assign(options, {
       symbol: symbol.toUpperCase(),
-      orderId: 450384142
+      orderId: 522032007
     }),
   );
 

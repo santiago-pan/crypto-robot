@@ -8,6 +8,6 @@ if (process.env.MODE !== 'PRODUCTION') {
   console.log('Runing in PRODUCTION mode');
 }
 
-cron.schedule('*/1 * * * *', () => {
+cron.schedule('*/30 * * * * *', () => {
   callLoop();
 });

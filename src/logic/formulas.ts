@@ -7,6 +7,7 @@ import {
   sellCoin,
 } from '../api/api-layer';
 import { CoinPrice } from '../api/api-types';
+import { getLunaPrice } from '../api/coincap';
 import { getCoinPrice } from '../api/coingecko-api';
 import { updateLastPrice } from '../db/db-helper';
 import { log } from '../db/logger';
@@ -22,7 +23,8 @@ export async function callLoop() {
   if (process.env.MODE === 'PRODUCTION') {
     test = false;
   }
-  const coinPrice = await getCoinPrice('LUNA');
+  // const coinPrice = await getCoinPrice('LUNA');
+  const coinPrice = await getLunaPrice();
   const wallet = await getWallet();
   const busdBalance = getCoinBalance('BUSD', wallet);
   const lastOpenBuyOrder = await getLastOpenBuyOrder('LUNABUSD');
