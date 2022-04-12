@@ -1,18 +1,23 @@
-import { getCoinPrice } from '../api/api';
+import { CoinPrice } from '../api/api-types';
+import { getLunaPrice } from '../api/coincap';
+import { getCoinPrice } from '../api/coingecko-api';
 import {
   getLastOperation,
   getLastTransaction,
   loadTransactions,
   startDb,
-} from '../db/db';
+} from '../db/db-helper';
+import { pushBuyOrderToStack, stackPopOrder } from '../db/stack-helper';
 import {
   getAltCoinBTCPrice,
+  getInvestQuantity,
   getSellProfitBTC,
   getTransactionPair,
   getTransactionsProfitBTC,
   getTransactionValueBTC,
+  loop,
 } from '../logic/formulas';
-import { Transaction } from '../logic/types';
+import { OpenOrder, Transaction } from '../logic/types';
 import { btcData } from '../static/data';
 
 describe('Formulas tests', () => {
@@ -54,6 +59,14 @@ describe('Formulas tests', () => {
     expect(coin.date).toBeDefined();
   });
 
+  it('should fetch coin price for Luna', async () => {
+    const priceA = await getCoinPrice('LUNA');
+    const priceB = await getLunaPrice();
+
+    console.log('Price A: ', priceA);
+    console.log('Price B: ', priceB);
+  });
+
   it('should load transactions', async () => {
     const t = await loadTransactions();
     expect(t.length).toBe(62);
@@ -63,10 +76,12 @@ describe('Formulas tests', () => {
     var date = new Date(btcData.prices[0][0]);
     expect(date.toISOString()).toEqual('2021-02-24T15:09:04.189Z');
   });
+
   it('should star the database', async () => {
     const db = await startDb();
     expect(db.transactions.length).toBeGreaterThan(0);
   });
+
   it('should fetch the last transaction', async () => {
     const db = await startDb();
     const last = getLastTransaction(db, 'ADA');
@@ -81,11 +96,13 @@ describe('Formulas tests', () => {
       coinFee: 'BNB',
     });
   });
+
   it('should fetch the last operation for given coin', async () => {
     const db = await startDb();
     const operation = getLastOperation(db, 'ADA');
     expect(operation).toBe('BUY');
   });
+
   it('should calculate the BTC price of a coin', async () => {
     const coinPrice = await getCoinPrice('ADA');
     const btcPrice = await getCoinPrice('BTC');
@@ -93,6 +110,7 @@ describe('Formulas tests', () => {
     // console.log('price: ', coinBTCPrice);
     expect(coinBTCPrice.price > 0).toBeTruthy();
   });
+
   it('should calculate the sell profit', async () => {
     const db = await startDb();
     const lastTransaction = getLastTransaction(db, 'ADA');
@@ -102,7 +120,171 @@ describe('Formulas tests', () => {
       // console.log('BTC profit: ', profit);
     }
   });
+
+  it('should create a buy operation', async () => {
+    const coinPrice: CoinPrice = {
+      date: 1,
+      price: 10,
+    };
+    const lastFilledSellOrder: OpenOrder = {
+      date: new Date(),
+      id: 1,
+      price: 12,
+      quantity: 1,
+      side: 'SELL',
+      symbol: 'LUNABUSD',
+      timestampCreated: 1,
+      timestampUpdated: 3,
+    };
+
+    const lastFilledBuyOrder: OpenOrder = {
+      date: new Date(),
+      id: 1,
+      price: 11,
+      quantity: 1,
+      side: 'SELL',
+      symbol: 'LUNABUSD',
+      timestampCreated: 1,
+      timestampUpdated: 2,
+    };
+
+    const r = await loop(
+      coinPrice,
+      lastFilledSellOrder,
+      lastFilledBuyOrder,
+      100,
+    );
+
+    expect(r.status).toBe('ok');
+    expect((await stackPopOrder())?.price).toBe(10);
+    expect(await stackPopOrder()).toBeNull();
+  });
+
+  it('should create a buy operation', async () => {
+    const coinPrice: CoinPrice = {
+      date: 1,
+      price: 10,
+    };
+    const lastFilledSellOrder: OpenOrder = {
+      date: new Date(),
+      id: 1,
+      price: 11,
+      quantity: 1,
+      side: 'SELL',
+      symbol: 'LUNABUSD',
+      timestampCreated: 1,
+      timestampUpdated: 2,
+    };
+
+    const lastFilledBuyOrder: OpenOrder = {
+      date: new Date(),
+      id: 1,
+      price: 12,
+      quantity: 1,
+      side: 'SELL',
+      symbol: 'LUNABUSD',
+      timestampCreated: 1,
+      timestampUpdated: 3,
+    };
+
+    const r = await loop(
+      coinPrice,
+      lastFilledSellOrder,
+      lastFilledBuyOrder,
+      100,
+    );
+
+    expect(r.status).toBe('ok');
+    expect((await stackPopOrder())?.price).toBe(10);
+    expect(await stackPopOrder()).toBeNull();
+  });
+  it('should not create a buy operation', async () => {
+    const coinPrice: CoinPrice = {
+      date: 1,
+      price: 13,
+    };
+    const lastFilledSellOrder: OpenOrder = {
+      date: new Date(),
+      id: 1,
+      price: 1,
+      quantity: 1,
+      side: 'SELL',
+      symbol: 'LUNABUSD',
+      timestampCreated: 1,
+      timestampUpdated: 2,
+    };
+
+    const lastFilledBuyOrder: OpenOrder = {
+      date: new Date(),
+      id: 1,
+      price: 12,
+      quantity: 1,
+      side: 'SELL',
+      symbol: 'LUNABUSD',
+      timestampCreated: 1,
+      timestampUpdated: 3,
+    };
+
+    const r = await loop(
+      coinPrice,
+      lastFilledSellOrder,
+      lastFilledBuyOrder,
+      100,
+    );
+
+    expect(r.status).toBe('ok');
+    expect(await stackPopOrder()).toBeNull();
+  });
+
+  it('should not create a buy operation', async () => {
+    const coinPrice: CoinPrice = {
+      date: 1,
+      price: 13,
+    };
+    const lastFilledSellOrder: OpenOrder = {
+      date: new Date(),
+      id: 1,
+      price: 11,
+      quantity: 1,
+      side: 'SELL',
+      symbol: 'LUNABUSD',
+      timestampCreated: 1,
+      timestampUpdated: 2,
+    };
+
+    const lastFilledBuyOrder: OpenOrder = {
+      date: new Date(),
+      id: 1,
+      price: 12,
+      quantity: 1,
+      side: 'SELL',
+      symbol: 'LUNABUSD',
+      timestampCreated: 1,
+      timestampUpdated: 3,
+    };
+
+    await pushBuyOrderToStack(1,10)
+
+    const r = await loop(
+      coinPrice,
+      lastFilledSellOrder,
+      lastFilledBuyOrder,
+      100,
+    );
+
+    expect(r.status).toBe('ok');
+    expect(await stackPopOrder()).toBeNull();
+  });
 });
+
+it('should get the quantity to invest based on price', () => {
+  expect(getInvestQuantity(100)).toBe(1)
+  expect(getInvestQuantity(90.1)).toBe(1)
+  expect(getInvestQuantity(80)).toBe(1.2)
+  expect(getInvestQuantity(70)).toBe(1.4)
+  expect(getInvestQuantity(39.9)).toBe(2)
+  expect(getInvestQuantity(30)).toBe(2)
+})
 
 const transaction: Transaction = {
   date: new Date(),

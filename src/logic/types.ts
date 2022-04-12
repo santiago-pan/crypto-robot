@@ -1,3 +1,5 @@
+import { ORDER_SIDE, SYMBOL } from '../api/api-types';
+
 export const COIN_MAP: { [key: string]: string } = {
   ADA: 'cardano',
   BNB: 'binancecoin',
@@ -16,6 +18,7 @@ export type CURRENCY = 'usd' | 'eur';
 export type ALT_COIN =
   | 'ADA'
   | 'BNB'
+  | 'BUSD'
   | 'BTT'
   | 'DOGE'
   | 'DOT'
@@ -52,8 +55,32 @@ export type Asset = {
   inOrder: number;
 };
 
-export type PriceHistory = {
-  price: [[number, number]];
-  market_caps: [[number, number]];
-  total_volumes: [[number, number]];
+export type OpenOrder = {
+  id: number;
+  symbol: SYMBOL;
+  price: number;
+  quantity: number;
+  side: ORDER_SIDE;
+  date: Date;
+  timestampCreated: number;
+  timestampUpdated: number;
 };
+
+export type Balance = {
+  coin: ALT_COIN;
+  free: number;
+  locked: number;
+};
+
+export type Wallet = {
+  balances: ReadonlyArray<Balance>;
+};
+
+export type LoopStatus =
+  | {
+      status: 'ok';
+    }
+  | {
+      status: 'error';
+      msg: string;
+    };
