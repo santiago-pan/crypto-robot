@@ -86,7 +86,7 @@ export async function loop(
 
   // Create SELL order if stack it not empty
   if (stackOrder) {
-    await sellCoin(lastFilledBuyOrder.price + PROFIT, QUANTITY, test);
+    await sellCoin(stackOrder.price + PROFIT, QUANTITY, test);
     return { status: 'ok' };
   }
 
