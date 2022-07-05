@@ -1,5 +1,5 @@
 import { CoinPrice } from '../api/api-types';
-import { getLunaPrice } from '../api/coincap';
+import { getAdaPrice } from '../api/coincap';
 import { getCoinPrice } from '../api/coingecko-api';
 import {
   getLastOperation,
@@ -59,9 +59,9 @@ describe('Formulas tests', () => {
     expect(coin.date).toBeDefined();
   });
 
-  it('should fetch coin price for Luna', async () => {
-    const priceA = await getCoinPrice('LUNA');
-    const priceB = await getLunaPrice();
+  it('should fetch coin price for Ada', async () => {
+    const priceA = await getCoinPrice('ADA');
+    const priceB = await getAdaPrice();
 
     console.log('Price A: ', priceA);
     console.log('Price B: ', priceB);
@@ -132,7 +132,7 @@ describe('Formulas tests', () => {
       price: 12,
       quantity: 1,
       side: 'SELL',
-      symbol: 'LUNABUSD',
+      symbol: 'ADABUSD',
       timestampCreated: 1,
       timestampUpdated: 3,
     };
@@ -143,7 +143,7 @@ describe('Formulas tests', () => {
       price: 11,
       quantity: 1,
       side: 'SELL',
-      symbol: 'LUNABUSD',
+      symbol: 'ADABUSD',
       timestampCreated: 1,
       timestampUpdated: 2,
     };
@@ -171,7 +171,7 @@ describe('Formulas tests', () => {
       price: 11,
       quantity: 1,
       side: 'SELL',
-      symbol: 'LUNABUSD',
+      symbol: 'ADABUSD',
       timestampCreated: 1,
       timestampUpdated: 2,
     };
@@ -182,7 +182,7 @@ describe('Formulas tests', () => {
       price: 12,
       quantity: 1,
       side: 'SELL',
-      symbol: 'LUNABUSD',
+      symbol: 'ADABUSD',
       timestampCreated: 1,
       timestampUpdated: 3,
     };
@@ -209,7 +209,7 @@ describe('Formulas tests', () => {
       price: 1,
       quantity: 1,
       side: 'SELL',
-      symbol: 'LUNABUSD',
+      symbol: 'ADABUSD',
       timestampCreated: 1,
       timestampUpdated: 2,
     };
@@ -220,7 +220,7 @@ describe('Formulas tests', () => {
       price: 12,
       quantity: 1,
       side: 'SELL',
-      symbol: 'LUNABUSD',
+      symbol: 'ADABUSD',
       timestampCreated: 1,
       timestampUpdated: 3,
     };
@@ -247,7 +247,7 @@ describe('Formulas tests', () => {
       price: 11,
       quantity: 1,
       side: 'SELL',
-      symbol: 'LUNABUSD',
+      symbol: 'ADABUSD',
       timestampCreated: 1,
       timestampUpdated: 2,
     };
@@ -258,7 +258,7 @@ describe('Formulas tests', () => {
       price: 12,
       quantity: 1,
       side: 'SELL',
-      symbol: 'LUNABUSD',
+      symbol: 'ADABUSD',
       timestampCreated: 1,
       timestampUpdated: 3,
     };

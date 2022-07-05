@@ -15,7 +15,7 @@ describe('helper functions test', () => {
     expect(minPrice?.price).toBe(101.84);
   });
   it('should return the coing balance', () => {
-    expect(getCoinBalance('LUNA', mock_wallet)).toBe(3);
+    expect(getCoinBalance('ADA', mock_wallet)).toBe(3);
     expect(getCoinBalance('BUSD', mock_wallet)).toBe(745.494088);
   });
 });
@@ -24,7 +24,7 @@ const mock_wallet: Wallet = {
   balances: [
     { coin: 'BNB', free: 0.00027584, locked: 0 },
     { coin: 'BUSD', free: 745.494088, locked: 55.1 },
-    { coin: 'LUNA', free: 3, locked: 9 },
+    { coin: 'ADA', free: 3, locked: 9 },
   ],
 };
 
@@ -35,7 +35,7 @@ const mock_open_orders: ReadonlyArray<OpenOrder> = [
     price: 101.84,
     quantity: 1,
     side: 'SELL',
-    symbol: 'LUNABUSD',
+    symbol: 'ADABUSD',
     timestampCreated: 1640581760303,
     timestampUpdated: 1640581760303,
   },
@@ -45,7 +45,7 @@ const mock_open_orders: ReadonlyArray<OpenOrder> = [
     price: 99.27,
     quantity: 1,
     side: 'SELL',
-    symbol: 'LUNABUSD',
+    symbol: 'ADABUSD',
     timestampCreated: 1640608058035,
     timestampUpdated: 1640608058035,
   },
@@ -55,7 +55,7 @@ const mock_open_orders: ReadonlyArray<OpenOrder> = [
     price: 98.08,
     quantity: 2,
     side: 'SELL',
-    symbol: 'LUNABUSD',
+    symbol: 'ADABUSD',
     timestampCreated: 1640657623814,
     timestampUpdated: 1640657623814,
   },
@@ -65,7 +65,7 @@ const mock_open_orders: ReadonlyArray<OpenOrder> = [
     price: 88.22,
     quantity: 1,
     side: 'SELL',
-    symbol: 'LUNABUSD',
+    symbol: 'ADABUSD',
     timestampCreated: 1641450009617,
     timestampUpdated: 1641450009617,
   },
@@ -75,7 +75,7 @@ const mock_open_orders: ReadonlyArray<OpenOrder> = [
     price: 89.77,
     quantity: 1,
     side: 'SELL',
-    symbol: 'LUNABUSD',
+    symbol: 'ADABUSD',
     timestampCreated: 1641450016727,
     timestampUpdated: 1641450016727,
   },
@@ -85,7 +85,7 @@ const mock_open_orders: ReadonlyArray<OpenOrder> = [
     price: 85.09,
     quantity: 1,
     side: 'SELL',
-    symbol: 'LUNABUSD',
+    symbol: 'ADABUSD',
     timestampCreated: 1642501530260,
     timestampUpdated: 1642501530260,
   },
@@ -95,7 +95,7 @@ const mock_open_orders: ReadonlyArray<OpenOrder> = [
     price: 55.1,
     quantity: 1,
     side: 'BUY',
-    symbol: 'LUNABUSD',
+    symbol: 'ADABUSD',
     timestampCreated: 1642867362221,
     timestampUpdated: 1642867362221,
   },
@@ -105,7 +105,7 @@ const mock_open_orders: ReadonlyArray<OpenOrder> = [
     price: 67.39,
     quantity: 1,
     side: 'SELL',
-    symbol: 'LUNABUSD',
+    symbol: 'ADABUSD',
     timestampCreated: 1643098937095,
     timestampUpdated: 1643098937095,
   },
@@ -115,7 +115,7 @@ const mock_open_orders: ReadonlyArray<OpenOrder> = [
     price: 59.11,
     quantity: 1,
     side: 'SELL',
-    symbol: 'LUNABUSD',
+    symbol: 'ADABUSD',
     timestampCreated: 1643268474577,
     timestampUpdated: 1643268474577,
   },

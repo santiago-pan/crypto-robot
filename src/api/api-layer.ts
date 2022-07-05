@@ -57,7 +57,7 @@ export async function getLastOpenBuyOrder(
 }
 
 export async function getLastFilledBuyOrder(): Promise<OpenOrder | null> {
-  const bnbOrders = await bnbAllOrders('LUNABUSD', {});
+  const bnbOrders = await bnbAllOrders('ADABUSD', {});
   const buyOrders = [...bnbOrders]
     .sort((a, b) => (a.updateTime > b.updateTime ? 1 : -1))
     .filter((b) => b.side === 'BUY')
@@ -79,7 +79,7 @@ export async function getLastFilledBuyOrder(): Promise<OpenOrder | null> {
 }
 
 export async function getLastFilledSellOrder(): Promise<OpenOrder | null> {
-  const bnbOrders = await bnbAllOrders('LUNABUSD', {});
+  const bnbOrders = await bnbAllOrders('ADABUSD', {});
   const buyOrders = [...bnbOrders]
     .sort((a, b) => (a.updateTime > b.updateTime ? 1 : -1))
     .filter((b) => b.side === 'SELL')
@@ -113,7 +113,7 @@ export async function buyCoin(
     };
   }
 
-  const newOrderResponse = await bnbNewOrder('LUNABUSD', 'BUY', 'LIMIT', {
+  const newOrderResponse = await bnbNewOrder('ADABUSD', 'BUY', 'LIMIT', {
     price,
     quantity,
     timeInForce: 'GTC',
@@ -140,7 +140,7 @@ export async function sellCoin(price: number, quantity: number, test = true) {
     };
   }
 
-  const newOrderResponse = await bnbNewOrder('LUNABUSD', 'SELL', 'LIMIT', {
+  const newOrderResponse = await bnbNewOrder('ADABUSD', 'SELL', 'LIMIT', {
     price,
     quantity,
     timeInForce: 'GTC',
